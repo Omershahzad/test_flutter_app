@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'login.dart';
 
 void main() => runApp(MyApp());
 
@@ -161,12 +164,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     RaisedButton(
                       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 35),
-                      child: Text("submit"),
+                      child: Text("Register"),
                       textColor: Colors.black87,
                       onPressed: (){
                         if(registrationform.currentState.validate()){
 
                           print("Button, click");
+                          FirebaseAuth aut = FirebaseAuth.instance;
+                          aut.
+                          createUserWithEmailAndPassword(email: valueEmial, password: valuePassword)
+                              .then((value){
+                                print("successfuly Regitered");
+                                print(value);
+                          }).catchError((err){
+                            print("Registeration failed");
+                            print(err);
+                          });
 
                         }
                       },
@@ -176,6 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text("Already have account? Login to continoue"),
                       onPressed: (){
                         print("Login button pressed");
+                        //Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => Login()));
+                        Navigator.push(context, new MaterialPageRoute(builder: (context)=> Login()));
+                        
+                        //Navigator.of(context).puchReplacement(new MaterialPageRoute(builder: null))
+
                       },
 
                     )
